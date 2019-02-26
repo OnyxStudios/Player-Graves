@@ -1,0 +1,7 @@
+{
+  "block.playergraves.gravestone": "Gravestone",
+  "graves.nullplayer": "You have entered a null player name!",
+  "graves.nullinv": "The player you have selected does not have a graves entry!",
+  "graves.nullspawn": "Unable to find an area to spawn gravestone!",
+  "graves.spawnedgrave": "Successfully spawned Gravestone at x: %s y: %s z: %s"
+}

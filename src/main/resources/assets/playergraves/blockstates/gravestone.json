@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"facing=north": { "model": "playergraves:block/gravestone" },
+		"facing=south": { "model": "playergraves:block/gravestone", "y": 180 },
+		"facing=west":  { "model": "playergraves:block/gravestone", "y": 270 },
+		"facing=east":  { "model": "playergraves:block/gravestone", "y": 90 }
+	}
+}

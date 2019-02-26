@@ -1,0 +1,17 @@
+{
+  "id": "playergraves",
+  "name": "Player Graves",
+  "description": "A player gravestones mod",
+  "version": "1.0.0",
+  "side": "universal",
+  "initializers": [
+    "nerdhub.playergraves.PlayerGraves",
+    "nerdhub.playergraves.PlayerGravesClient"
+  ],
+  "requires": {
+    "fabric": "*"
+  },
+  "mixins": {
+    "common": "playergraves.common.json"
+  }
+}
