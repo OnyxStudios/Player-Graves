@@ -35,7 +35,7 @@ public class PlayerGraves implements ModInitializer {
         Registry.register(Registry.BLOCK_ENTITY, new Identifier(MODID, "blockentity_gravestone"), GRAVESTONE);
         GravesEventHandler.registerEventHandlers();
 
-        CommandRegistry.INSTANCE.register(true, serverCommandSourceCommandDispatcher -> ServerCommandManager.literal("recover")
+        CommandRegistry.INSTANCE.register(false, serverCommandSourceCommandDispatcher -> ServerCommandManager.literal("recover")
                 .requires(source -> source.hasPermissionLevel(4))
                 .then(ServerCommandManager.argument("name", StringArgumentType.string())
                         .executes(context -> {
