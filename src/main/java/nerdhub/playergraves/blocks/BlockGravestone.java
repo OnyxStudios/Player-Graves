@@ -1,6 +1,5 @@
 package nerdhub.playergraves.blocks;
 
-import com.sun.istack.internal.Nullable;
 import nerdhub.playergraves.data.PlayerInventoryPersistentState;
 import nerdhub.playergraves.utils.InventoryHelper;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
@@ -80,7 +79,6 @@ public class BlockGravestone extends BlockWithEntity {
         return BlockRenderType.MODEL;
     }
 
-    @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext itemPlacementContext_1) {
         return this.getDefaultState().with(FACING, itemPlacementContext_1.getPlayerHorizontalFacing().getOpposite());

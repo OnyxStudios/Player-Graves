@@ -35,41 +35,43 @@ public class PlayerGraves implements ModInitializer {
         Registry.register(Registry.BLOCK_ENTITY, new Identifier(MODID, "blockentity_gravestone"), GRAVESTONE);
         GravesEventHandler.registerEventHandlers();
 
-        CommandRegistry.INSTANCE.register(false, serverCommandSourceCommandDispatcher -> ServerCommandManager.literal("recover")
-                .requires(source -> source.hasPermissionLevel(4))
-                .then(ServerCommandManager.argument("name", StringArgumentType.string())
-                        .executes(context -> {
-                            ServerPlayerEntity targetPlayer = context.getSource().getMinecraftServer().getPlayerManager().getPlayer(StringArgumentType.getString(context, "name"));
-                            ServerPlayerEntity senderPlayer = context.getSource().getPlayer();
-                            ServerWorld world = context.getSource().getWorld();
-                            PlayerInventoryPersistentState persistentState = PlayerInventoryPersistentState.get(world);
+        CommandRegistry.INSTANCE.register(false, serverCommandSourceCommandDispatcher -> serverCommandSourceCommandDispatcher.register(
+                ServerCommandManager.literal("recover")
+                        .requires(source -> source.hasPermissionLevel(4))
+                        .then(ServerCommandManager.argument("name", StringArgumentType.string())
+                                .executes(context -> {
+                                    ServerPlayerEntity targetPlayer = context.getSource().getMinecraftServer().getPlayerManager().getPlayer(StringArgumentType.getString(context, "name"));
+                                    ServerPlayerEntity senderPlayer = context.getSource().getPlayer();
+                                    ServerWorld world = context.getSource().getWorld();
+                                    PlayerInventoryPersistentState persistentState = PlayerInventoryPersistentState.get(world);
 
-                            if (targetPlayer != null) {
-                                if (persistentState.isPlayerInventorySaved(targetPlayer)) {
-                                    BlockPos deathPos = GravesEventHandler.findValidPos(world, senderPlayer.getPos());
+                                    if (targetPlayer != null) {
+                                        if (persistentState.isPlayerInventorySaved(targetPlayer)) {
+                                            BlockPos deathPos = GravesEventHandler.findValidPos(world, senderPlayer.getPos());
 
-                                    if (deathPos != null) {
-                                        world.setBlockState(deathPos, PlayerGraves.BLOCK_GRAVESTONE.getDefaultState().with(BlockGravestone.FACING, senderPlayer.getHorizontalFacing()));
-                                        BlockEntity blockEntity = world.getBlockEntity(deathPos);
+                                            if (deathPos != null) {
+                                                world.setBlockState(deathPos, PlayerGraves.BLOCK_GRAVESTONE.getDefaultState().with(BlockGravestone.FACING, senderPlayer.getHorizontalFacing().getOpposite()));
+                                                BlockEntity blockEntity = world.getBlockEntity(deathPos);
 
-                                        if (blockEntity instanceof BlockEntityGravestone) {
-                                            ((BlockEntityGravestone) blockEntity).playerName = targetPlayer.getName().getText();
-                                            ((BlockEntityGravestone) blockEntity).playerInv = persistentState.getPlayerInventory(targetPlayer);
-                                            blockEntity.markDirty();
-                                            world.updateListeners(deathPos, world.getBlockState(deathPos), world.getBlockState(deathPos), 3);
+                                                if (blockEntity instanceof BlockEntityGravestone) {
+                                                    ((BlockEntityGravestone) blockEntity).playerName = targetPlayer.getEntityName();
+                                                    ((BlockEntityGravestone) blockEntity).playerInv = persistentState.getPlayerInventory(targetPlayer);
+                                                    blockEntity.markDirty();
+                                                    world.updateListeners(deathPos, world.getBlockState(deathPos), world.getBlockState(deathPos), 3);
+                                                }
+
+                                                senderPlayer.addChatMessage(new TranslatableTextComponent("graves.spawnedgrave", deathPos.getX(), deathPos.getY(), deathPos.getZ()).setStyle(new Style().setColor(TextFormat.GOLD)), false);
+                                            } else {
+                                                senderPlayer.addChatMessage(new TranslatableTextComponent("graves.nullspawn").setStyle(new Style().setColor(TextFormat.LIGHT_PURPLE)), false);
+                                            }
+                                        } else {
+                                            senderPlayer.addChatMessage(new TranslatableTextComponent("graves.nullinv").setStyle(new Style().setColor(TextFormat.LIGHT_PURPLE)), false);
                                         }
-
-                                        senderPlayer.addChatMessage(new TranslatableTextComponent("graves.spawnedgrave", deathPos.getX(), deathPos.getY(), deathPos.getZ()).setStyle(new Style().setColor(TextFormat.GOLD)), false);
                                     } else {
-                                        senderPlayer.addChatMessage(new TranslatableTextComponent("graves.nullspawn").setStyle(new Style().setColor(TextFormat.LIGHT_PURPLE)), false);
+                                        senderPlayer.addChatMessage(new TranslatableTextComponent("graves.nullplayer").setStyle(new Style().setColor(TextFormat.LIGHT_PURPLE)), false);
                                     }
-                                } else {
-                                    senderPlayer.addChatMessage(new TranslatableTextComponent("graves.nullinv").setStyle(new Style().setColor(TextFormat.LIGHT_PURPLE)), false);
-                                }
-                            } else {
-                                senderPlayer.addChatMessage(new TranslatableTextComponent("graves.nullplayer").setStyle(new Style().setColor(TextFormat.LIGHT_PURPLE)), false);
-                            }
-                            return 1;
-                        })));
+                                    return 1;
+                                })
+                        )));
     }
 }
