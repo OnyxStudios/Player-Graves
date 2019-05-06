@@ -7,10 +7,10 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.sortme.MobSpawnerEntry;
-import net.minecraft.sortme.MobSpawnerLogic;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.MobSpawnerEntry;
+import net.minecraft.world.MobSpawnerLogic;
 import net.minecraft.world.World;
 
 public class BlockEntityGravestone extends BlockEntity implements Tickable {
@@ -69,7 +69,7 @@ public class BlockEntityGravestone extends BlockEntity implements Tickable {
     @Override
     public void tick() {
         if(PlayerGraves.config.getBoolean("grave-spawner")) {
-            logic.method_8274(EntityType.SKELETON);
+            logic.setEntityId(EntityType.SKELETON);
             logic.update();
         }
     }

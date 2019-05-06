@@ -13,8 +13,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Property;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -24,10 +24,10 @@ import net.minecraft.world.World;
 
 public class BlockGravestone extends BlockWithEntity {
 
-    public static final DirectionProperty FACING = HorizontalFacingBlock.field_11177;
+    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     public BlockGravestone() {
-        super(FabricBlockSettings.of(Material.STONE).hardness(0.2f).build());
+        super(FabricBlockSettings.of(Material.STONE).hardness(0.2f).resistance(3600000.0F).dropsNothing().build());
         this.setDefaultState(this.stateFactory.getDefaultState().with(FACING, Direction.NORTH));
     }
 
@@ -85,18 +85,18 @@ public class BlockGravestone extends BlockWithEntity {
     }
 
     @Override
-    public BlockState rotate(BlockState blockState_1, Rotation rotation_1) {
+    public BlockState rotate(BlockState blockState_1, BlockRotation rotation_1) {
         return blockState_1.with(FACING, rotation_1.rotate(blockState_1.get(FACING)));
     }
 
     @Override
-    public BlockState mirror(BlockState blockState_1, Mirror mirror_1) {
+    public BlockState mirror(BlockState blockState_1, BlockMirror mirror_1) {
         return blockState_1.rotate(mirror_1.getRotation(blockState_1.get(FACING)));
     }
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> stateFactory$Builder_1) {
-        stateFactory$Builder_1.with(new Property[]{FACING});
+        stateFactory$Builder_1.add(new Property[]{FACING});
     }
 
     @Override

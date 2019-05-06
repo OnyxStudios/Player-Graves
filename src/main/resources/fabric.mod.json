@@ -1,17 +1,32 @@
 {
+  "schemaVersion": 1,
   "id": "playergraves",
+  "version": "1.0.1",
   "name": "Player Graves",
   "description": "A player gravestones mod",
-  "version": "1.0.0",
-  "side": "universal",
-  "initializers": [
-    "nerdhub.playergraves.PlayerGraves",
-    "nerdhub.playergraves.PlayerGravesClient"
+  "authors": [
+    "abused_master"
+  ],
+  "contact": {
+    "homepage": "https://minecraft.curseforge.com/projects/Player-Graves",
+    "sources": "https://github.com/NerdHubMC/Player-Graves"
+  },
+  "license": "MIT",
+  "icon": "assets/playergraves/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "nerdhub.playergraves.PlayerGraves"
+    ],
+    "client": [
+      "nerdhub.playergraves.PlayerGravesClient"
+    ]
+  },
+  "mixins": [
+    "playergraves.mixins.json"
   ],
   "requires": {
+    "fabricloader": ">=0.4.0",
     "fabric": "*"
-  },
-  "mixins": {
-    "common": "playergraves.common.json"
   }
 }

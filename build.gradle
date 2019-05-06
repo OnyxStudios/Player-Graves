@@ -51,7 +51,7 @@ publishing {
 			artifact jar
 			artifact sourcesJar
 			pom {
-				name = "AbusedLib"
+				name = "Player-Graves"
 				url = "https://github.com/NerdHubMC/Player-Graves"
 				licenses {
 					license {

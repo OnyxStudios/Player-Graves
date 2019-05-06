@@ -21,7 +21,7 @@ public class GravestoneRenderer extends BlockEntityRenderer<BlockEntityGraveston
         super.render(tile, x, y, z, float_1, int_1);
 
         if(PlayerGraves.config.getBoolean("render-skull") && tile.playerName != null && !FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            ItemStack skull = new ItemStack(Items.field_8575);
+            ItemStack skull = new ItemStack(Items.PLAYER_HEAD);
             skull.setTag(new CompoundTag());
             skull.getTag().put("SkullOwner", new StringTag(tile.playerName));
 

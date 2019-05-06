@@ -22,7 +22,7 @@ public class GravesEventHandler {
     public static void registerEventHandlers() {
         EntityDeathDropsCallback.EVENT.register((world, livingEntity, damageSource, ci) -> {
             if(livingEntity instanceof PlayerEntity && !livingEntity.world.getGameRules().getBoolean("keepInventory")) {
-                BlockPos deathPos = findValidPos(livingEntity.world, livingEntity.getPos());
+                BlockPos deathPos = findValidPos(livingEntity.world, livingEntity.getBlockPos());
 
                 if(deathPos != null && !((PlayerEntity) livingEntity).inventory.isInvEmpty()) {
                     if(livingEntity.world.isAir(deathPos.down()) || livingEntity.world.getBlockState(deathPos.down()).getBlock() instanceof FluidBlock || livingEntity.world.getBlockState(deathPos.down()).getBlock() == Blocks.TALL_GRASS) {
