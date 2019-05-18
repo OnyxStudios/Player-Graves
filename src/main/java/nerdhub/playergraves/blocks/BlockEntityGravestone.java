@@ -30,7 +30,7 @@ public class BlockEntityGravestone extends BlockEntity implements Tickable {
         }
 
         @Override
-        public void method_8273(int i) {
+        public void sendStatus(int i) {
             BlockEntityGravestone.this.world.addBlockAction(BlockEntityGravestone.this.pos, PlayerGraves.BLOCK_GRAVESTONE, i, 0);
         }
 
@@ -68,7 +68,7 @@ public class BlockEntityGravestone extends BlockEntity implements Tickable {
 
     @Override
     public void tick() {
-        if(PlayerGraves.config.getBoolean("grave-spawner")) {
+        if (PlayerGraves.config.getBoolean("grave-spawner")) {
             logic.setEntityId(EntityType.SKELETON);
             logic.update();
         }

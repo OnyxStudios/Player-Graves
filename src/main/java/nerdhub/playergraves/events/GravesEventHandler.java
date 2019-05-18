@@ -4,16 +4,16 @@ import nerdhub.playergraves.PlayerGraves;
 import nerdhub.playergraves.blocks.BlockEntityGravestone;
 import nerdhub.playergraves.blocks.BlockGravestone;
 import nerdhub.playergraves.data.PlayerInventoryPersistentState;
+import net.minecraft.ChatFormat;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextFormat;
-import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -40,7 +40,7 @@ public class GravesEventHandler {
                             ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) livingEntity;
                             PlayerInventoryPersistentState persistentState = PlayerInventoryPersistentState.get(serverPlayerEntity.getServerWorld());
                             persistentState.savePlayerInventory(serverPlayerEntity);
-                            serverPlayerEntity.addChatMessage(new TranslatableTextComponent("graves.spawnedgrave", deathPos.getX(), deathPos.getY(), deathPos.getZ()).setStyle(new Style().setColor(TextFormat.GOLD)), false);
+                            serverPlayerEntity.addChatMessage(new TranslatableComponent("graves.spawnedgrave", deathPos.getX(), deathPos.getY(), deathPos.getZ()).setStyle(new Style().setColor(ChatFormat.GOLD)), false);
                         }
                         livingEntity.world.updateListeners(deathPos, livingEntity.world.getBlockState(deathPos), livingEntity.world.getBlockState(deathPos), 3);
                         ci.cancel();

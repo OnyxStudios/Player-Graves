@@ -7,16 +7,16 @@ import nerdhub.playergraves.data.PlayerInventoryPersistentState;
 import nerdhub.playergraves.events.GravesEventHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
+import net.minecraft.ChatFormat;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextFormat;
-import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
@@ -26,7 +26,7 @@ public class PlayerGraves implements ModInitializer {
     public static final String MODID = "playergraves";
     public static Config config = new Config();
     public static BlockGravestone BLOCK_GRAVESTONE = new BlockGravestone();
-    public static BlockEntityType<BlockEntityGravestone> GRAVESTONE = BlockEntityType.Builder.create(BlockEntityGravestone::new).build(null);
+    public static BlockEntityType<BlockEntityGravestone> GRAVESTONE = BlockEntityType.Builder.create(BlockEntityGravestone::new, BLOCK_GRAVESTONE).build(null);
 
     @Override
     public void onInitialize() {
@@ -60,15 +60,15 @@ public class PlayerGraves implements ModInitializer {
                                                     world.updateListeners(deathPos, world.getBlockState(deathPos), world.getBlockState(deathPos), 3);
                                                 }
 
-                                                senderPlayer.addChatMessage(new TranslatableTextComponent("graves.spawnedgrave", deathPos.getX(), deathPos.getY(), deathPos.getZ()).setStyle(new Style().setColor(TextFormat.GOLD)), false);
+                                                senderPlayer.addChatMessage(new TranslatableComponent("graves.spawnedgrave", deathPos.getX(), deathPos.getY(), deathPos.getZ()).setStyle(new Style().setColor(ChatFormat.GOLD)), false);
                                             } else {
-                                                senderPlayer.addChatMessage(new TranslatableTextComponent("graves.nullspawn").setStyle(new Style().setColor(TextFormat.LIGHT_PURPLE)), false);
+                                                senderPlayer.addChatMessage(new TranslatableComponent("graves.nullspawn").setStyle(new Style().setColor(ChatFormat.LIGHT_PURPLE)), false);
                                             }
                                         } else {
-                                            senderPlayer.addChatMessage(new TranslatableTextComponent("graves.nullinv").setStyle(new Style().setColor(TextFormat.LIGHT_PURPLE)), false);
+                                            senderPlayer.addChatMessage(new TranslatableComponent("graves.nullinv").setStyle(new Style().setColor(ChatFormat.LIGHT_PURPLE)), false);
                                         }
                                     } else {
-                                        senderPlayer.addChatMessage(new TranslatableTextComponent("graves.nullplayer").setStyle(new Style().setColor(TextFormat.LIGHT_PURPLE)), false);
+                                        senderPlayer.addChatMessage(new TranslatableComponent("graves.nullplayer").setStyle(new Style().setColor(ChatFormat.LIGHT_PURPLE)), false);
                                     }
                                     return 1;
                                 })

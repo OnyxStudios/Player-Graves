@@ -5,7 +5,7 @@ import nerdhub.playergraves.utils.InventoryHelper;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.VerticalEntityPosition;
+import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -41,11 +41,11 @@ public class BlockGravestone extends BlockWithEntity {
                 ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) playerEntity;
                 PlayerInventoryPersistentState persistentState = PlayerInventoryPersistentState.get((ServerWorld) world);
 
-                if(gravestone.playerInv != null) {
+                if (gravestone.playerInv != null) {
                     InventoryHelper.deserializeInv(playerEntity, gravestone.playerInv);
                     world.setBlockState(pos, Blocks.AIR.getDefaultState());
                     return;
-                }else if (persistentState.isPlayerInventorySaved(serverPlayerEntity)) {
+                } else if (persistentState.isPlayerInventorySaved(serverPlayerEntity)) {
                     persistentState.recoverPlayerInventory(serverPlayerEntity);
                     world.setBlockState(pos, Blocks.AIR.getDefaultState());
                     return;
@@ -65,8 +65,8 @@ public class BlockGravestone extends BlockWithEntity {
     }
 
     @Override
-    public boolean skipRenderingSide(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
-        return blockState_1.getBlock() == this ? true : super.skipRenderingSide(blockState_1, blockState_2, direction_1);
+    public boolean isSideInvisible(BlockState blockState_1, BlockState blockState_2, Direction direction_1) {
+        return blockState_1.getBlock() == this ? true : super.isSideInvisible(blockState_1, blockState_2, direction_1);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class BlockGravestone extends BlockWithEntity {
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, VerticalEntityPosition verticalEntityPosition_1) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext verticalEntityPosition_1) {
         VoxelShape defaultShape = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 3.0D, 16.0D);
         switch (state.get(FACING)) {
             case NORTH:
